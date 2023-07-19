@@ -5,11 +5,18 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
 @EnableWebSecurity // 스프링 시큐리티 필터가 스프링 필터체인에 등록이 됨
 public class SecurityConfig {
+
+  // 해당 메서드의 리턴되는 오브젝트를 IOC로 등록 해준다.
+  @Bean
+  public BCryptPasswordEncoder encodePwd() {
+    return new BCryptPasswordEncoder();
+  }
 
   @Bean
   SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
@@ -23,7 +30,7 @@ public class SecurityConfig {
         .antMatchers("/admin/**").hasRole("ADMIN")
         .anyRequest().permitAll()
         .and()
-        .formLogin().loginPage("/login")
+        .formLogin().loginPage("/loginForm")
         .and().build();
 
   }
