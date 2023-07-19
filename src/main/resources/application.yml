@@ -12,7 +12,12 @@ spring:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://localhost:3306/security?serverTimezone=Asia/Seoul
     username: cos
-    password: cos1234
+    password: 1234
+
+  mvc:
+    view:
+      prefix: /templates/
+      suffix: .mustache
 
   jpa:
     hibernate:
