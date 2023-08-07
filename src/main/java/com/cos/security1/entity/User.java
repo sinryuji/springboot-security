@@ -12,6 +12,7 @@ import org.springframework.data.annotation.CreatedDate;
 @Entity
 @Data
 public class User {
+
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private int id;
@@ -19,6 +20,10 @@ public class User {
   private String password;
   private String email;
   private String role;
+
+  private String provider;
+  private String providerId;
+
   @CreationTimestamp
   private Timestamp createDate;
 }
