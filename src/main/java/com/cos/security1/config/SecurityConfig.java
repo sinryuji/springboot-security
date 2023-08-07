@@ -22,8 +22,8 @@ public class SecurityConfig {
   SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
     return http
         .csrf().disable()
-        .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-        .and()
+//        .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+//        .and()
         .authorizeHttpRequests()
         .antMatchers("/user/**").authenticated()
         .antMatchers("/manager/**").hasRole("ADMIN or MANAGER")
@@ -31,6 +31,9 @@ public class SecurityConfig {
         .anyRequest().permitAll()
         .and()
         .formLogin().loginPage("/loginForm")
+//        .usernameParameter("nickname") // UserDetailsService 구현체에서 구현할 loadUserByUsername의 파라미터로 들어갈 username을 다른걸로 변경 할 수 있다.
+        .loginProcessingUrl("/login")
+        .defaultSuccessUrl("/")
         .and().build();
 
   }

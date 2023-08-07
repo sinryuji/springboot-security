@@ -8,4 +8,5 @@ import org.springframework.stereotype.Repository;
 // @Repository라는 어노테이션이 없어도 되는 이유는 JpaRepository를 상속했기 때문에
 public interface UserRepository extends JpaRepository<User, Integer> {
 
+  public User findByUsername(String username);
 }
