@@ -2,6 +2,7 @@ package com.cos.security1.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -10,6 +11,8 @@ import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
 @EnableWebSecurity // 스프링 시큐리티 필터가 스프링 필터체인에 등록이 됨
+@EnableGlobalMethodSecurity(securedEnabled = true, prePostEnabled = true)
+// Secured 어노테이션 활성화, // PreAuthorize, PostAuthorize 어노테이션 활성화
 public class SecurityConfig {
 
   // 해당 메서드의 리턴되는 오브젝트를 IOC로 등록 해준다.
@@ -26,7 +29,7 @@ public class SecurityConfig {
 //        .and()
         .authorizeHttpRequests()
         .antMatchers("/user/**").authenticated()
-        .antMatchers("/manager/**").hasRole("ADMIN or MANAGER")
+        .antMatchers("/manager/**").hasAnyRole("ADMIN", "MANAGER")
         .antMatchers("/admin/**").hasRole("ADMIN")
         .anyRequest().permitAll()
         .and()
