@@ -33,7 +33,7 @@ public class PrincipalOauth2UserService extends DefaultOAuth2UserService {
     // userRequest 정보 -> loadUser 함수 호출 -> 구글로부터 회원 프로필을 받음
     System.out.println("getAttributes: " + oAuth2User.getAttributes());
 
-    String provider = userRequest.getClientRegistration().getClientId(); // google
+    String provider = userRequest.getClientRegistration().getRegistrationId(); // google
     String providerId = oAuth2User.getAttribute("sub");
     String username = provider + "_" + providerId;
     String password = bCryptPasswordEncoder.encode("겟인데어");
