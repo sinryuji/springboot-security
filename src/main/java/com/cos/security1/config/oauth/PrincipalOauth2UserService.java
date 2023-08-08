@@ -1,6 +1,9 @@
 package com.cos.security1.config.oauth;
 
 import com.cos.security1.config.auth.PrincipalDetails;
+import com.cos.security1.config.oauth.provider.GitHubUserInfo;
+import com.cos.security1.config.oauth.provider.GoogleUserInfo;
+import com.cos.security1.config.oauth.provider.OAuth2UserInfo;
 import com.cos.security1.entity.User;
 import com.cos.security1.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,11 +36,20 @@ public class PrincipalOauth2UserService extends DefaultOAuth2UserService {
     // userRequest 정보 -> loadUser 함수 호출 -> 구글로부터 회원 프로필을 받음
     System.out.println("getAttributes: " + oAuth2User.getAttributes());
 
-    String provider = userRequest.getClientRegistration().getRegistrationId(); // google
-    String providerId = oAuth2User.getAttribute("sub");
+    OAuth2UserInfo oAuth2UserInfo = null;
+    if (userRequest.getClientRegistration().getRegistrationId().equals("google")) {
+      oAuth2UserInfo = new GoogleUserInfo(oAuth2User.getAttributes());
+    } else if (userRequest.getClientRegistration().getRegistrationId().equals("github")) {
+      oAuth2UserInfo = new GitHubUserInfo(oAuth2User.getAttributes());
+    } else {
+      System.out.println("우리는 구글과 깃허브만 지원해여 ㅎㅎ");
+    }
+
+    String provider = oAuth2UserInfo.getProvider();
+    String providerId = oAuth2UserInfo.getProviderId();
     String username = provider + "_" + providerId;
     String password = bCryptPasswordEncoder.encode("겟인데어");
-    String email = oAuth2User.getAttribute("email");
+    String email = oAuth2UserInfo.getEmail();
     String role = "ROLE_USER";
 
     User user = userRepository.findByUsername(username);
