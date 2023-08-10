@@ -2,11 +2,11 @@ package com.cos.security1.config.oauth.provider;
 
 import java.util.Map;
 
-public class GitHubUserInfo implements OAuth2UserInfo {
+public class FortyTwoUserInfo implements OAuth2UserInfo {
 
   private Map<String, Object> attributes; // oauth2User.getAttributes();
 
-  public GitHubUserInfo(Map<String, Object> attributes) {
+  public FortyTwoUserInfo(Map<String, Object> attributes) {
     this.attributes = attributes;
   }
 
@@ -17,7 +17,7 @@ public class GitHubUserInfo implements OAuth2UserInfo {
 
   @Override
   public String getProvider() {
-    return "github";
+    return "ft";
   }
 
   @Override
@@ -27,6 +27,6 @@ public class GitHubUserInfo implements OAuth2UserInfo {
 
   @Override
   public String getName() {
-    return (String) this.attributes.get("displayname");
+    return (String) this.attributes.get("name");
   }
 }

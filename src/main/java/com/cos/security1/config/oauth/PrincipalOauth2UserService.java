@@ -1,6 +1,7 @@
 package com.cos.security1.config.oauth;
 
 import com.cos.security1.config.auth.PrincipalDetails;
+import com.cos.security1.config.oauth.provider.FortyTwoUserInfo;
 import com.cos.security1.config.oauth.provider.GitHubUserInfo;
 import com.cos.security1.config.oauth.provider.GoogleUserInfo;
 import com.cos.security1.config.oauth.provider.OAuth2UserInfo;
@@ -37,10 +38,13 @@ public class PrincipalOauth2UserService extends DefaultOAuth2UserService {
     System.out.println("getAttributes: " + oAuth2User.getAttributes());
 
     OAuth2UserInfo oAuth2UserInfo = null;
-    if (userRequest.getClientRegistration().getRegistrationId().equals("google")) {
+    String registrationId = userRequest.getClientRegistration().getRegistrationId();
+    if (registrationId.equals("google")) {
       oAuth2UserInfo = new GoogleUserInfo(oAuth2User.getAttributes());
-    } else if (userRequest.getClientRegistration().getRegistrationId().equals("github")) {
+    } else if (registrationId.equals("github")) {
       oAuth2UserInfo = new GitHubUserInfo(oAuth2User.getAttributes());
+    } else if (registrationId.equals("ft")) {
+      oAuth2UserInfo = new FortyTwoUserInfo(oAuth2User.getAttributes());
     } else {
       System.out.println("우리는 구글과 깃허브만 지원해여 ㅎㅎ");
     }

@@ -41,3 +41,18 @@ spring:
             client-secret: 275df4a15013f05bdb5208397e2bf6a5250cefdb
             scope:
               - user
+          ft:
+            client-id: u-s4t2ud-2c762ba0156701210e55bd0cbbab480214909098bae32f5421cbbdfc02c10647
+            client-secret: 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
+            client-name: ft
+            authorization-grant-type: authorization_code
+            redirect-uri: http://localhost:8080/login/oauth2/code/ft
+            scope:
+              - public
+
+        provider:
+          ft:
+            authorization-uri: https://api.intra.42.fr/oauth/authorize
+            token-uri: https://api.intra.42.fr/oauth/token
+            user-info-uri: https://api.intra.42.fr/v2/me
+            user-name-attribute: login
